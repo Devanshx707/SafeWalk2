@@ -3,13 +3,12 @@ import { getDatabase } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  databaseURL: "https://YOUR_PROJECT.firebaseio.com"
+  apiKey: "AIzaSyBFnfMeQMjhIRwY893nkeG_W-kNjwkzkUs",
+  authDomain: "safewalk-492.firebaseapp.com",
+  projectId: "safewalk-492",
+  storageBucket: "safewalk-492.firebasestorage.app",
+  messagingSenderId: "896916123426",
+  appId: "1:896916123426:web:6da5f7ba1b0776d2c2bf7b"
 };
 
 const app = initializeApp(firebaseConfig);
