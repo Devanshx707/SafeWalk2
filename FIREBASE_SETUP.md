@@ -1,6 +1,6 @@
 # Firebase Setup Guide for SafeWalk2
 
-This guide will help you integrate Firebase into your SafeWalk2 Expo app.
+This guide will help you integrate Firebase into your **SafeWalk2 Expo/React Native mobile app**.
 
 ## Step 1: Install Firebase Dependency
 
@@ -24,10 +24,31 @@ yarn add firebase
 4. Enable Google Analytics (optional)
 5. Click "Create project"
 
-## Step 3: Add Web App to Firebase
+## Step 3: Add App to Firebase (Mobile - Expo)
+
+Since SafeWalk2 is a React Native/Expo app (not a web app), you have two options:
+
+### Option A: Add Android App (Recommended for Testing)
+1. In Firebase Console, click the **Android icon** (🤖)
+2. Fill in:
+   - Android Package Name: `com.safewalk2.app`
+   - App nickname: "SafeWalk2 Android" (optional)
+   - SHA-1 Certificate Fingerprint: (Optional for development)
+3. Download `google-services.json` (save in your project, but we won't use it directly with Expo)
+4. Click "Register app"
+
+### Option B: Add iOS App
+1. In Firebase Console, click the **iOS icon** (🍎)
+2. Fill in:
+   - iOS Bundle ID: `com.safewalk2.app`
+   - App Store ID: (leave empty for now)
+3. Download `GoogleService-Info.plist` (not needed for Expo)
+
+### For Expo Apps (Use Web Config)
+Even though it's a mobile app, Expo uses the **Web Firebase configuration**. So:
 
 1. In Firebase Console, click the **Web icon** (</>)
-2. Register app with nickname "SafeWalk2 Web"
+2. Register app with nickname "SafeWalk2 Expo"
 3. You'll see a config object like:
 
 ```javascript
