@@ -8,7 +8,8 @@ const firebaseConfig = {
   projectId: "safewalk-492",
   storageBucket: "safewalk-492.firebasestorage.app",
   messagingSenderId: "896916123426",
-  appId: "1:896916123426:web:6da5f7ba1b0776d2c2bf7b"
+  appId: "1:896916123426:web:6da5f7ba1b0776d2c2bf7b",
+  databaseURL: "https://safewalk-492-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
 const app = initializeApp(firebaseConfig);
