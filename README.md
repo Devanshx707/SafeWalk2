@@ -11,5 +11,10 @@ People traveling late at night may face unsafe routes, low visibility areas, and
 - Provide a quick emergency alert action.
 - Share simple late-night safety tips.
 
+## Project Template Structure
 
 
+## Next Steps
+- Integrate maps and geolocation APIs.
+- Add real-time incident data.
+- Connect emergency contacts and backend alerts.
