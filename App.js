@@ -354,25 +354,27 @@ useEffect(() => {
 
   // --- CONTACTS SCREEN ---
   if (currentScreen === 'Contacts') {
-    const handleAddContact = async () => {
-      if (!newContactName.trim() || !newContactPhone.trim() || !newContactEmail.trim()) {
-        return Alert.alert('Missing Information', 'Please fill in name, phone, and email.');
-      }
+   const handleAddContact = async () => {
+  if (!newContactName.trim() || !newContactPhone.trim() || !newContactEmail.trim()) {
+    return Alert.alert('Missing Information', 'Please fill in name, phone, and email.');
+  }
+  if (!currentUser) {
+    return Alert.alert('Not logged in', 'Please log in again.');
+  }
 
-      const newContact = {
-        id: Date.now().toString(),
-        name: newContactName,
-        phone: newContactPhone,
-        email: newContactEmail,
-      };
+  await addEmergencyContact(currentUser.uid, {
+    name: newContactName,
+    phone: newContactPhone,
+    email: newContactEmail,
+  });
 
-      setContacts([...contacts, newContact]);
+  const updated = await getEmergencyContacts(currentUser.uid);
+  setContacts(Array.isArray(updated) ? updated : []);
 
-      setNewContactName('');
-      setNewContactPhone('');
-      setNewContactEmail('');
-    };
-
+  setNewContactName('');
+  setNewContactPhone('');
+  setNewContactEmail('');
+};
     return (
       <SafeAreaView style={styles.container}>
         <TouchableOpacity style={styles.backButton} onPress={() => setCurrentScreen('Home')}>
