@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { auth } from './firebaseConfig';
-import { onAuthStateChanged } from 'firebase/auth';
+
 import {
   StyleSheet,
   Text,
@@ -17,6 +16,11 @@ import {
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import * as Haptics from 'expo-haptics';
+
+
+import { auth } from './firebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
+
 
 import {
   checkBackend,
