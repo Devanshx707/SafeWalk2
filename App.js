@@ -72,7 +72,6 @@ export default function App() {
 
   // Contact management state
   const [contacts, setContacts] = useState([]);
-  const [newContactEmail, setNewContactEmail] = useState('');
   const [currentUser, setCurrentUser] = useState(null); 
   const [newContactName, setNewContactName] = useState('');
   const [newContactPhone, setNewContactPhone] = useState('');
@@ -193,10 +192,7 @@ useEffect(() => {
   return unsubscribe;
 }, []);
 
-useEffect(() => {
-  (async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    ...
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
