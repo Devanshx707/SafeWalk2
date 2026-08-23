@@ -1,7 +1,13 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
-import { getReactNativePersistence, initializeAuth } from 'firebase/auth';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+
+import {
+  initializeAuth,
+  getReactNativePersistence,
+} from 'firebase/auth';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBFnfMeQMjhIRwY893nkeG_W-kNjwkzkUs",
@@ -10,11 +16,14 @@ const firebaseConfig = {
   storageBucket: "safewalk-492.firebasestorage.app",
   messagingSenderId: "896916123426",
   appId: "1:896916123426:web:6da5f7ba1b0776d2c2bf7b",
-  databaseURL: "https://safewalk-492-default-rtdb.asia-southeast1.firebasedatabase.app/"
+  databaseURL: "https://safewalk-492-default-rtdb.asia-southeast1.firebasedatabase.app",
 };
 
+
 const app = initializeApp(firebaseConfig);
+
 export const database = getDatabase(app);
+
 export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+  persistence: getReactNativePersistence(AsyncStorage),
 });
