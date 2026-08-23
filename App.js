@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import {
   StyleSheet,
   Text,
@@ -16,6 +17,11 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import * as Haptics from 'expo-haptics';
 
+
+import { auth } from './firebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
+
+
 import {
   checkBackend,
   sendChatMessage,
@@ -29,7 +35,10 @@ import {
   cancelEmergency,
   loginUser,
   registerUser,
+  addEmergencyContact,
+  getEmergencyContavt
 } from './services/SafeWalkService';
+
 
 // --- DARK MAP THEME ---
 const darkMapStyle = [
@@ -63,6 +72,8 @@ export default function App() {
 
   // Contact management state
   const [contacts, setContacts] = useState([]);
+  const [newContactEmail, setNewContactEmail] = useState('');
+  const [currentUser, setCurrentUser] = useState(null); 
   const [newContactName, setNewContactName] = useState('');
   const [newContactPhone, setNewContactPhone] = useState('');
   const [newContactEmail, setNewContactEmail] = useState('');
@@ -166,11 +177,26 @@ export default function App() {
       setChatLoading(false);
     }
   };
+useEffect(() => {
+  testBackend();
+}, []);
 
-  useEffect(() => {
-    testBackend();
-  }, []);
+useEffect(() => {                         
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    setCurrentUser(user);
+    if (user) {
+      getEmergencyContacts(user.uid).then((c) =>
+        setContacts(Array.isArray(c) ? c : [])
+      );
+    }
+  });
+  return unsubscribe;
+}, []);
 
+useEffect(() => {
+  (async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    ...
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -328,25 +354,27 @@ export default function App() {
 
   // --- CONTACTS SCREEN ---
   if (currentScreen === 'Contacts') {
-    const handleAddContact = async () => {
-      if (!newContactName.trim() || !newContactPhone.trim() || !newContactEmail.trim()) {
-        return Alert.alert('Missing Information', 'Please fill in name, phone, and email.');
-      }
+   const handleAddContact = async () => {
+  if (!newContactName.trim() || !newContactPhone.trim() || !newContactEmail.trim()) {
+    return Alert.alert('Missing Information', 'Please fill in name, phone, and email.');
+  }
+  if (!currentUser) {
+    return Alert.alert('Not logged in', 'Please log in again.');
+  }
 
-      const newContact = {
-        id: Date.now().toString(),
-        name: newContactName,
-        phone: newContactPhone,
-        email: newContactEmail,
-      };
+  await addEmergencyContact(currentUser.uid, {
+    name: newContactName,
+    phone: newContactPhone,
+    email: newContactEmail,
+  });
 
-      setContacts([...contacts, newContact]);
+  const updated = await getEmergencyContacts(currentUser.uid);
+  setContacts(Array.isArray(updated) ? updated : []);
 
-      setNewContactName('');
-      setNewContactPhone('');
-      setNewContactEmail('');
-    };
-
+  setNewContactName('');
+  setNewContactPhone('');
+  setNewContactEmail('');
+};
     return (
       <SafeAreaView style={styles.container}>
         <TouchableOpacity style={styles.backButton} onPress={() => setCurrentScreen('Home')}>
